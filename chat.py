@@ -3,7 +3,7 @@ import socket
 import threading
 
 
-# ----- SERVER CLASS -----
+# ------------------------------------------ SERVER CLASS ----------------------------------------------
 class ChatServer:
     # declare variables
     CONNECTIONS = []
@@ -98,11 +98,12 @@ class ChatServer:
                 self.broadcast(self.SERVER_SOCKET, '[SERVER] ' + self.NICKNAMES[addr] + ' connected to server')
 
 
-# ----- CLIENT CLASS -----
+# ------------------------------------------ CLIENT CLASS ----------------------------------------------------------
 class ChatClient:
     # declare variables
     CLIENT_SOCKET = socket.socket()
     RECV_BUFFER = 4096
+    USERNAME = ''
 
     # -- constructor
     def __init__(self, hostname, port, username):
@@ -123,6 +124,7 @@ class ChatClient:
             sys.exit()
 
         # username good -> continue with execution
+        self.USERNAME = username
         # connection was successful:
         print('Connection successful')
 
@@ -142,7 +144,7 @@ class ChatClient:
     def input_handler(self):
         while True:
             # wait for user input -> send to server
-            user_input = input('')
+            user_input = input('[' + self.USERNAME + '] ')
 
             # check input
             if user_input == 'exit()':  # if the user wants to close the program
@@ -156,7 +158,7 @@ class ChatClient:
                     pass
 
 
-# ----- ENTRY POINT -----
+# ---------------------------------------------- ENTRY POINT ----------------------------------------------
 # given enough arguments?
 if len(sys.argv) > 1:  # more than the standard argument?
     if str(sys.argv[1]) == 'server' and len(sys.argv) == 3:  # server & 3 argument in total?
