@@ -144,7 +144,7 @@ class ChatClient:
     def input_handler(self):
         while True:
             # wait for user input -> send to server
-            user_input = input('[' + self.USERNAME + '] ')
+            user_input = input()
 
             # check input
             if user_input == 'exit()':  # if the user wants to close the program
